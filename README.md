@@ -23,19 +23,24 @@ spring.datasource.url=jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE
 <code>
 spring.jpa.hibernate.ddl-auto=update
 </code>
-<h5>Creating Models/Tables/Entities</h5>
+<h4>Creating Models/Tables/Entities</h4>
 Create a package <b>entity</b> where you will create Entity classes
 e.g we are creating <i>Person</i> entity 
 
 Use **@Entity** annotation to make it entity, **@Data** to make setter getters, **@NoArgsConstructor** to create no argument constructor, **@AllArgsConstructor** to make argument constructor. **@Id** to make it primary key, **@GeneratedValue(strategy = GenerationType.AUTO)** for autoincrement.
 Now your table will be created once the application starts.
 
-<h5>Creating Repository</h5>
+<h4>Creating Repository</h4>
 Now create a repository for every entity, create package named <b>repository</b> and create interface,, e.g. PersonRepository that will extend <b>JpaRepository<Person,Integer></b> and use <b>@Repository</b> annotation on it.
 
-<h5>Creating Service</h5>
+<h4>Creating Service</h4>
 Services will contain business logic, e.g. CRUD operation in this case.
 Create package <b>service</b> and create service for every repository. e.g. <b>PersonService</b>
 
 Use **@Service** annotation on PersonService. In PersonService, create private object of PersonRepository and use **@Autowired** annotation on it, so spring framework will initilize that object.
 
+<h4>Creating Controller</h4>
+Now in the controller package, create **PersonController** that will manage Http requests.
+Use **@RestController**, **@RequestMapping(value = "/person")** as we do in controllers. Create an object of PersonService in PersonController and use **@Autowired** annotation on it, so spring framework will manage object creation.
+
+Now create GET, POST, PUT and DELETE methods with **@GetMapping**,**@PostMapping**, **@PutMapping(value = "/{id}")** and **@DeleteMapping(value = "/{id}")**. In the function parameters, use **@PathVariable int id** to get data from URL and **@RequestBody Person person** to get data from body.
