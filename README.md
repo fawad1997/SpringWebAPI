@@ -44,3 +44,5 @@ Now in the controller package, create **PersonController** that will manage Http
 Use **@RestController**, **@RequestMapping(value = "/person")** as we do in controllers. Create an object of PersonService in PersonController and use **@Autowired** annotation on it, so spring framework will manage object creation.
 
 Now create GET, POST, PUT and DELETE methods with **@GetMapping**,**@PostMapping**, **@PutMapping(value = "/{id}")** and **@DeleteMapping(value = "/{id}")**. In the function parameters, use **@PathVariable int id** to get data from URL and **@RequestBody Person person** to get data from body.
+
+Adding <b>@CrossOrigin(origins = "*", allowedHeaders = "*")</b> on controller so it can be accessed from anywhere.

@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/person")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PersonController {
     @Autowired
     private PersonService personService;
