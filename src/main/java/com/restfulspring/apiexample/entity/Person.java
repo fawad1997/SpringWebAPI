@@ -1,5 +1,6 @@
 package com.restfulspring.apiexample.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,14 @@ import javax.persistence.Id;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty(value = "ID")
     private int ID;
+    @JsonProperty(value = "Name")
     private String Name;
+    @JsonProperty(value = "Age")
     private int Age;
+    @JsonProperty(value = "Height")
     private double Height;
+    @JsonProperty(value = "CNIC")
     private String CNIC;
 }
