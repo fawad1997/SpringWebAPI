@@ -33,3 +33,9 @@ Now your table will be created once the application starts.
 <h5>Creating Repository</h5>
 Now create a repository for every entity, create package named <b>repository</b> and create interface,, e.g. PersonRepository that will extend <b>JpaRepository<Person,Integer></b> and use <b>@Repository</b> annotation on it.
 
+<h5>Creating Service</h5>
+Services will contain business logic, e.g. CRUD operation in this case.
+Create package <b>service</b> and create service for every repository. e.g. <b>PersonService</b>
+
+Use **@Service** annotation on PersonService. In PersonService, create private object of PersonRepository and use **@Autowired** annotation on it, so spring framework will initilize that object.
+
