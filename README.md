@@ -55,12 +55,14 @@ Remove H2 Database dependency from **pom.xml** and add <a href="https://mvnrepos
 
 comment/remove the H2 database configuration from **application.properties** file and add MySQL properties as follows:
 
-<code>
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver<br/>
-spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC<br/>
-spring.datasource.username=root<br/>
-spring.datasource.password=<br/>
-spring.jpa.show-sql=true<br/>
-spring.jpa.hibernate.ddl-auto=update<br/>
-spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL5Dialect<br/>
-</code>
+<code>spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver</code><br/>
+<code>spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC</code><br/>
+<code>spring.datasource.username=root</code><br/>
+<code>spring.datasource.password=</code><br/>
+<code>spring.jpa.show-sql=true</code><br/>
+<code>spring.jpa.hibernate.ddl-auto=update</code><br/>
+<code>spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL5Dialect</code><br/>
+
+### One to Many Relation in Hibernate
+##### Creating Entities
+lets create two Entities Country and City for oneToMany Relationship.
