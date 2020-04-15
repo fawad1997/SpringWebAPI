@@ -49,3 +49,18 @@ Now create GET, POST, PUT and DELETE methods with **@GetMapping**,**@PostMapping
 Adding <b>@CrossOrigin(origins = "*", allowedHeaders = "*")</b> on controller so it can be accessed from anywhere.
 
 Adding **@JsonProperty** on entity to get exact case as we want 
+
+### Using MySQL database instead of H2
+Remove H2 Database dependency from **pom.xml** and add <a href="https://mvnrepository.com/artifact/mysql/mysql-connector-java/8.0.19">MySQL Connector</a>
+
+comment/remove the H2 database configuration from **application.properties** file and add MySQL properties as follows:
+
+<code>
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver<br/>
+spring.datasource.url=jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC<br/>
+spring.datasource.username=root<br/>
+spring.datasource.password=<br/>
+spring.jpa.show-sql=true<br/>
+spring.jpa.hibernate.ddl-auto=update<br/>
+spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.MySQL5Dialect<br/>
+</code>
