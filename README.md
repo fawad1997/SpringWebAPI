@@ -66,3 +66,14 @@ comment/remove the H2 database configuration from **application.properties** fil
 ### One to Many Relation in Hibernate
 ##### Creating Entities
 lets create two Entities Country and City for oneToMany Relationship.
+Create entity **City** with properties **cityId** and **cityName** annotate them with proper annotations like **@Id**, **@GeneratedValue(strategy = GenerationType.AUTO)** and **@Column(name = "cityId")** and also annotate the table with annotations like **@Entity**, **@Data**, **@NoArgsConstructor** and **@AllArgsConstructor**.
+
+Now create an entity **Country**, annotate class with annotations **@Entity**, **@Data**, **@NoArgsConstructor** and **@AllArgsConstructor**, and create the follond fields
+
+<code>countryId</code> annotate it with **@Id**, **@GeneratedValue(strategy = GenerationType.AUTO)** and **@Column(name = "countryId")**
+
+<code>countryName</code>
+
+<code>List<.City> cities</code> and annotate it with **@OneToMany(cascade = CascadeType.ALL)** and **@JoinColumn(name = "cc_fk",referencedColumnName = "countryId")**. Yhis will create cc_fk column in City table and make it foreign key.
+
+

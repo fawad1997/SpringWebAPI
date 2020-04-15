@@ -20,7 +20,7 @@ public class Country {
     private int countryId;
     private String countryName;
 
-    @OneToMany(targetEntity = City.class,cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_countryId",referencedColumnName = "countryId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "cc_fk",referencedColumnName = "countryId")
     private List<City> cities;
 }

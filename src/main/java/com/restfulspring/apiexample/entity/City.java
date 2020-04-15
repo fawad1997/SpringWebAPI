@@ -16,6 +16,8 @@ public class City {
     @Column(name = "cityId")
     private int cityId;
     private String cityName;
-    @Column(name = "fk_countryId")
-    private int fk_countryId;
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "countryId")
+//    private Country country;
 }
