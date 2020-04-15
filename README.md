@@ -76,4 +76,5 @@ Now create an entity **Country**, annotate class with annotations **@Entity**, *
 
 <code>List<.City> cities</code> and annotate it with **@OneToMany(cascade = CascadeType.ALL)** and **@JoinColumn(name = "cc_fk",referencedColumnName = "countryId")**. Yhis will create cc_fk column in City table and make it foreign key.
 
-
+##### Creating Repositories
+same as above
