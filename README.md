@@ -183,7 +183,7 @@ modify getPerson method to throw notfound error
 ```
 ### Creating Filters
 Create a package **filters** and create filter in it.
-Make it **component** of spring framework by adding **@Component** annotation. By default, filter is called on every url pattren.
+Make it **component** of spring framework by adding **@Component** annotation. By default, filter is called on every url pattren. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/6c14edfd6299cf040d63c8a689c3395d5415de35)
 ```java
 import org.springframework.stereotype.Component;
 import javax.servlet.*;
@@ -196,4 +196,17 @@ public class MyFilter implements Filter {
     }
 }
 
+```
+To map filter on specific URL pattren, we need to do configuration. create pakage **config** and create class that will map URL pattren as follows:
+```java
+@Configuration
+public class MyFilterConfig {
+    @Bean
+    public FilterRegistrationBean<MyFilter> registrationBean(){
+        FilterRegistrationBean<MyFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new MyFilter());
+        registrationBean.addUrlPatterns("/person/*");
+        return registrationBean;
+    }
+}
 ```
