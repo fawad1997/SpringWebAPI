@@ -19,7 +19,7 @@ public class CountryController {
         return countryService.getCountries();
     }
     @GetMapping("/{id}")
-    public Country getCountry(@RequestParam int id){
+    public Country getCountry(@PathVariable int id){
         return countryService.getCountry(id);
     }
     @PostMapping
@@ -27,11 +27,11 @@ public class CountryController {
         return countryService.addCountry(country);
     }
     @PutMapping("/{id}")
-    public Country addCountry(@RequestParam int id,@RequestBody Country country){
+    public Country addCountry(@PathVariable int id,@RequestBody Country country){
         return countryService.updateCountry(id,country);
     }
     @DeleteMapping("/{id}")
-    public void deleteCountry(@RequestParam int id){
+    public void deleteCountry(@PathVariable int id){
         countryService.deleteCountry(id);
     }
 }

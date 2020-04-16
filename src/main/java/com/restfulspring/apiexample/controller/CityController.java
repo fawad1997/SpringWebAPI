@@ -21,7 +21,7 @@ public class CityController {
         return cityService.getCities();
     }
     @GetMapping("/{id}")
-    public City getCity(@RequestParam int id){
+    public City getCity(@PathVariable int id){
         return cityService.getCity(id);
     }
     @PostMapping
@@ -29,11 +29,11 @@ public class CityController {
         return cityService.addCity(city);
     }
     @PutMapping("/{id}")
-    public City addCity(@RequestParam int id,@RequestBody City city){
+    public City addCity(@PathVariable int id,@RequestBody City city){
         return cityService.updateCity(id,city);
     }
     @DeleteMapping("/{id}")
-    public void deleteCity(@RequestParam int id){
+    public void deleteCity(@PathVariable int id){
         cityService.deleteCity(id);
     }
 }

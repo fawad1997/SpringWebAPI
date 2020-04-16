@@ -88,7 +88,7 @@ Use **@Service** annotation on PersonService. In PersonService, create private o
 Now in the controller package, create **PersonController** that will manage Http requests.
 Use **@RestController**, **@RequestMapping(value = "/person")** as we do in controllers. Create an object of PersonService in PersonController and use **@Autowired** annotation on it, so spring framework will manage object creation.
 
-Now create GET, POST, PUT and DELETE methods with **@GetMapping**,**@PostMapping**, **@PutMapping(value = "/{id}")** and **@DeleteMapping(value = "/{id}")**. In the function parameters, use **@PathVariable int id** to get data from URL and **@RequestBody Person person** to get data from body. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/868f7bf954b91d4ef8d5701b6ba27dc39ac8f711)
+Now create GET, POST, PUT and DELETE methods with **@GetMapping**,**@PostMapping**, **@PutMapping(value = "/{id}")** and **@DeleteMapping(value = "/{id}")**. In the function parameters, use **@PathVariable int id** to get data from URL like localhost/person/1, and if we use **@RequestParam** it would be like localhost/person?id=1 and **@RequestBody Person person** to get data from body. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/868f7bf954b91d4ef8d5701b6ba27dc39ac8f711)
 #### Enabling Cross-Origin
 Adding 
 ```java
