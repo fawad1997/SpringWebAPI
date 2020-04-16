@@ -12,6 +12,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [One to Many Relation in Hibernate](#one-to-many-relation-in-hibernate)
   - [Creating Entities](#creating-entities)
 - [Error Handling](#error-handling)
+- [Creating Filters](#creating-filters)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -161,7 +162,7 @@ same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/com
 same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/72620f3b512d3e5f8ad3a12fcb29846e949c5738)
 
 ### Error Handling
-Suppose users requests a resource by FindbyId, currently it returns null, instead of null, we will now handle the error and return not found error. For that create a package named **exception** and create a class to handle exception
+Suppose users requests a resource by FindbyId, currently it returns null, instead of null, we will now handle the error and return not found error. For that create a package named **exception** and create a class to handle exception. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/71dabd4475d16720909d32e4dadf3c0224bdaaaa)
 ```java
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NotFoundException extends RuntimeException {
@@ -179,4 +180,20 @@ modify getPerson method to throw notfound error
         }
         return person.get();
     }
+```
+### Creating Filters
+Create a package **filters** and create filter in it.
+Make it **component** of spring framework by adding **@Component** annotation. By default, filter is called on every url pattren.
+```java
+import org.springframework.stereotype.Component;
+import javax.servlet.*;
+import java.io.IOException;
+@Component
+public class MyFilter implements Filter {
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        System.out.println("Filter Called");
+        chain.doFilter(req, resp);
+    }
+}
+
 ```
