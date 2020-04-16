@@ -11,6 +11,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [Using MySQL database instead of H2](#using-mysql-database-instead-of-h2)
 - [One to Many Relation in Hibernate](#one-to-many-relation-in-hibernate)
   - [Creating Entities](#creating-entities)
+- [Error Handling](#error-handling)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -158,3 +159,24 @@ same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/com
 same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/362bbd5eb20b8473a36e333143ecd28c3a15e25d)
 ##### Creating Controllers
 same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/72620f3b512d3e5f8ad3a12fcb29846e949c5738)
+
+### Error Handling
+Suppose users requests a resource by FindbyId, currently it returns null, instead of null, we will now handle the error and return not found error. For that create a package named **exception** and create a class to handle exception
+```java
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message){
+        super(message);
+    }
+}
+```
+modify getPerson method to throw notfound error
+```java
+ public Person getPerson(int id){
+        Optional<Person> person = personRepository.findById(id);
+        if(!person.isPresent()){
+            throw new NotFoundException("Person not found!");
+        }
+        return person.get();
+    }
+```

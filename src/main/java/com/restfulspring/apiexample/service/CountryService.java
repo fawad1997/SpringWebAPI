@@ -1,11 +1,13 @@
 package com.restfulspring.apiexample.service;
 
 import com.restfulspring.apiexample.entity.Country;
+import com.restfulspring.apiexample.exception.NotFoundException;
 import com.restfulspring.apiexample.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountryService {
@@ -16,7 +18,10 @@ public class CountryService {
         return countryRepository.findAll();
     }
     public Country getCountry(int id){
-        return countryRepository.findById(id).orElse(null);
+        Optional<Country> country = countryRepository.findById(id);
+        if(!country.isPresent())
+                throw new NotFoundException("Country not found!");
+        return country.get();
     }
     public Country addCountry(Country country){
         return countryRepository.save(country);

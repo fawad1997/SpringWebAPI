@@ -1,11 +1,13 @@
 package com.restfulspring.apiexample.service;
 
 import com.restfulspring.apiexample.entity.Person;
+import com.restfulspring.apiexample.exception.NotFoundException;
 import com.restfulspring.apiexample.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -17,7 +19,11 @@ public class PersonService {
     }
 
     public Person getPerson(int id){
-        return personRepository.findById(id).orElse(null);
+        Optional<Person> person = personRepository.findById(id);
+        if(!person.isPresent()){
+            throw new NotFoundException("Person not found!");
+        }
+        return person.get();
     }
 
     public Person addPerson(Person person){

@@ -2,11 +2,13 @@ package com.restfulspring.apiexample.service;
 
 import com.restfulspring.apiexample.entity.City;
 import com.restfulspring.apiexample.entity.Country;
+import com.restfulspring.apiexample.exception.NotFoundException;
 import com.restfulspring.apiexample.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CityService {
@@ -16,7 +18,10 @@ public class CityService {
         return cityRepository.findAll();
     }
     public City getCity(int id){
-        return cityRepository.findById(id).orElse(null);
+        Optional<City> city = cityRepository.findById(id);
+        if(!city.isPresent())
+            throw new NotFoundException("City not found!");
+        return city.get();
     }
     public City addCity(City city){
         return cityRepository.save(city);
