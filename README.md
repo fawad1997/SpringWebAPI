@@ -10,7 +10,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
     - [Enabling Cross-Origin](#enabling-cross-origin)
 - [Using MySQL database instead of H2](#using-mysql-database-instead-of-h2)
 - [One to Many Relation in Hibernate](#one-to-many-relation-in-hibernate)
-  -[Creating Entities](#creating-entities)
+  - [Creating Entities](#creating-entities)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
