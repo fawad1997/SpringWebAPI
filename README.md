@@ -400,3 +400,13 @@ public class AccountController {
     }
 }
 ```
+#### Allow Anonymous request
+As authorization is applied to every page, but we want that there should be no authorization on **AccountController** so we can register or login user, to do that, you need to modify **SecurityConfig** file.
+```java
+  @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/account/**").permitAll()
+                .anyRequest().authenticated();
+    }
+```
