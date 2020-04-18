@@ -216,7 +216,10 @@ public class MyFilterConfig {
 
 # Spring Security
 ## Spring Basic Security
-To implement spring security, we should have a table in database to register and authenticate users.
+To implement spring security, First we need to add **Spring Web Security** from maven repository
+- [Spring Boot Web Security](https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security)
+
+Now we should have a table in database to register and authenticate users.
 #### Create table for application users
 Lets create a table/entity for our application users. e.g. **ApplicationUser**
 ```java
