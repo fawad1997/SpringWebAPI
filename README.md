@@ -16,6 +16,9 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [Spring Security](#spring-security)
     - [Spring Basic Security](#spring-basic-security)
         - [Create table for application users](#create-table-for-application-users)
+        - [Create repository](#create-repository)
+        - [Create Service that will implement UserDetailsService](#create-service-that-will-implement-userdetailsservice)
+        - [Create Security Configuration File](#create-security-configuration-file)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -244,7 +247,7 @@ public interface UserRepository extends JpaRepository<ApplicationUser,Integer> {
     ApplicationUser findByUsername(String username);
 }
 ```
-#### Cerate Service that will implement UserDetailsService
+#### Create Service that will implement UserDetailsService
 Now create a service that should implement **UserDetailsService** as follows
 ```java
 @Service
@@ -279,3 +282,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 Now application will use our own customized security
+#### Add data to database on application start
+(Optional) Suppose we want to new user data into database when the application starts we can create new method in main class and use **@PostConstruct** annotation to bind it with application start.
+```java
+@Autowired
+    private UserRepository userRepository;
+    @PostConstruct
+    public void seedUser(){
+        ApplicationUser user = new ApplicationUser(1,"test","12345");
+        userRepository.save(user);
+    }
+``` 
