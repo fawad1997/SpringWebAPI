@@ -233,3 +233,11 @@ public class ApplicationUser {
     private String password;
 }
 ```
+#### Create repository
+Add an extra method **findByUsername** which will help us to find user by their username.
+```java
+@Repository
+public interface UserRepository extends JpaRepository<ApplicationUser,Integer> {
+    ApplicationUser findByUsername(String username);
+}
+```
