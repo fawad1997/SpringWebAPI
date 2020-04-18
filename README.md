@@ -410,3 +410,52 @@ As authorization is applied to every page, but we want that there should be no a
                 .anyRequest().authenticated();
     }
 ```
+
+#### Create filter to check token
+Now lets create a filter that will extend **OncePerRequestFilter** to verify token.
+```java
+@Component
+public class JwtFilter extends OncePerRequestFilter {
+
+    @Autowired
+    private JwtUtilService jwtUtil;
+    @Autowired
+    private UserService userService;
+    @Override
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+        //eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmYXdhZDE5OTciLCJleHAiOjE1ODcxNTA2NjgsImlhdCI6MTU4NzE0ODg2OH0.OEvx_a1nTW2vzH7ofuDXJHL8By_32_D3OIfycBoXykY
+        String token = null;
+        String username = null;
+        if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer")){
+            token = authorizationHeader.substring(7);
+            username = jwtUtil.extractUsername(token);
+        }
+        if(username!=null && SecurityContextHolder.getContext().getAuthentication() == null){
+            UserDetails userDetails = userService.loadUserByUsername(username);
+            if(jwtUtil.validateToken(token,userDetails)){
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,null,userDetails.getAuthorities());
+                authenticationToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(httpServletRequest)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        }
+        filterChain.doFilter(httpServletRequest,httpServletResponse);
+    }
+}
+```
+and in the Security config, register filter and stateless session. Inject **JwtFilter** using **@Autowired** and update the configure method.
+```java
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/account/**").permitAll()
+                .anyRequest().authenticated()
+                .and().exceptionHandling()
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+```
