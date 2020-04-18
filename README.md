@@ -22,6 +22,9 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [Jwt Authentication](#jwt-authentication)
     - [Adding Dependencies](#adding-dependencies)
     - [Create JwtUtilService](#create-jwtutilservice)
+    - [Generate Token](#generate-token)
+    - [Allow Anonymous request](#allow-anonymous-request)
+    - [Create filter to check token](#create-filter-to-check-token)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
