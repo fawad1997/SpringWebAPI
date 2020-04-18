@@ -25,6 +25,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
     - [Generate Token](#generate-token)
     - [Allow Anonymous request](#allow-anonymous-request)
     - [Create filter to check token](#create-filter-to-check-token)
+    - [Register User](#register-user)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -458,4 +459,27 @@ and in the Security config, register filter and stateless session. Inject **JwtF
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     } 
+```
+#### Register User
+Create a method in **UserService** that will contain business logic of user creation.
+```java
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    public Boolean registerUser(ApplicationUser user){
+        String passwordHash = passwordEncoder.encode(user.getPassword());
+        user.setPassword(passwordHash);
+        userRepository.save(user);
+        return true;
+    }
+```
+
+Now create a method in controller to register user.
+```java
+    @PostMapping("/register")
+    public String register(@RequestBody ApplicationUser user){
+        if(userService.registerUser(user)){
+            return "User Created";
+        }
+        return "User Creation Failed!";
+    }
 ```

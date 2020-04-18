@@ -32,4 +32,12 @@ public class AccountController {
         }
         return jwtUtil.generateToken(userCredentials.getUsername());
     }
+
+    @PostMapping("/register")
+    public String register(@RequestBody ApplicationUser user) {
+        if (userService.registerUser(user)) {
+            return "User Created";
+        }
+        return "User Creation Failed!";
+    }
 }
