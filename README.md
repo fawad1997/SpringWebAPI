@@ -13,6 +13,9 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
   - [Creating Entities](#creating-entities)
 - [Error Handling](#error-handling)
 - [Creating Filters](#creating-filters)
+- [Spring Security](#spring-security)
+    - [Spring Basic Security](#spring-basic-security)
+        - [Create table for application users](#create-table-for-application-users)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -197,7 +200,7 @@ public class MyFilter implements Filter {
 }
 
 ```
-To map filter on specific URL pattren, we need to do configuration. create pakage **config** and create class that will map URL pattren as follows:
+To map filter on specific URL pattren, we need to do configuration. create pakage **config** and create class that will map URL pattren as follows: [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/0034545758cbe486666a85cc32916a2821681a25)
 ```java
 @Configuration
 public class MyFilterConfig {
@@ -208,5 +211,25 @@ public class MyFilterConfig {
         registrationBean.addUrlPatterns("/person/*");
         return registrationBean;
     }
+}
+```
+
+# Spring Security
+## Spring Basic Security
+To implement spring security, we should have a table in database to register and authenticate users.
+#### Create table for application users
+Lets create a table/entity for our application users. e.g. **ApplicationUser**
+```java
+@Entity
+@Table(name = "user")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ApplicationUser {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String username;
+    private String password;
 }
 ```
