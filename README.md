@@ -353,3 +353,50 @@ public class JwtUtilService {
 }
 ```
 
+#### Generate Token
+Now lets create a controller that will be responsible for creating **User** account and generate **Jwt Token**.
+
+Before creating token you need to add one more method in your **SecurityConfig** class for AuthenticationManager, as we will be using it in our controller.
+```java
+@Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+``` 
+add it in **SecurityConfig** class.
+
+It is better to send and recieve detached object, which is not connected with database(not an entity). We call them as DTO (Data Transfer Object). Lets create dto for login request.
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AuthRequest {
+    private String username;
+    private String password;
+}
+``` 
+
+Now lets create a controller to generate token
+```java
+@RestController
+@RequestMapping("/account")
+public class AccountController {
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private JwtUtilService jwtUtil;
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/login")
+    public String login(@RequestBody AuthRequest userCredentials) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userCredentials.getUsername(),userCredentials.getPassword())
+            );
+        }catch (Exception e){ throw new Exception("Invalid Credentials");}
+        return jwtUtil.generateToken(userCredentials.getUsername());
+    }
+}
+```
