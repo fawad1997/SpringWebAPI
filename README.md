@@ -259,3 +259,23 @@ public class UserService implements UserDetailsService {
 }
 ```
 where **User** is from ```import org.springframework.security.core.userdetails.User;``` following import.
+#### Create Security Configuration File
+Now create a configure class that will extend **WebSecurityConfigurerAdapter** and tell spring security to use our own userdetails service.
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserService userService;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
+    }
+}
+```
+Now application will use our own customized security
