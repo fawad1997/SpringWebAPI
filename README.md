@@ -19,6 +19,8 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
         - [Create repository](#create-repository)
         - [Create Service that will implement UserDetailsService](#create-service-that-will-implement-userdetailsservice)
         - [Create Security Configuration File](#create-security-configuration-file)
+- [Jwt Authentication](#jwt-authentication)
+    - [Adding Dependencies](#adding-dependencies)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -293,3 +295,13 @@ Now application will use our own customized security
         userRepository.save(user);
     }
 ``` 
+## Jwt Authentication
+[JSON Web Tokens](https://jwt.io/) are an open, industry standard RFC 7519 method for representing claims securely between two parties.
+Its on one of the best way of authentication of modern time.
+![](/gitimages/jwt.jpg)
+#### Adding Dependencies
+To include Jwt in your project, you need to include the following dependencies:
+- [JSON Web Token](https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt/0.9.1)
+- [JAXB API](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1)
+
+you need to include [JAXB API](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1) if you are using Java 9 or above.
