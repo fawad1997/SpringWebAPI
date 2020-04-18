@@ -16,8 +16,10 @@ public class ApiexampleApplication {
 
     @PostConstruct
     public void seedUser() {
-        ApplicationUser user = new ApplicationUser(1, "test", "12345");
-        userRepository.save(user);
+        if (userRepository.findByUsername("test") == null) {
+            ApplicationUser user = new ApplicationUser(1, "test", "12345");
+            userRepository.save(user);
+        }
     }
 
     public static void main(String[] args) {

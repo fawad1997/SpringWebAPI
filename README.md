@@ -293,9 +293,11 @@ Now application will use our own customized security
 @Autowired
     private UserRepository userRepository;
     @PostConstruct
-    public void seedUser(){
-        ApplicationUser user = new ApplicationUser(1,"test","12345");
-        userRepository.save(user);
+    public void seedUser() {
+        if(userRepository.findByUsername("test")==null) {
+            ApplicationUser user = new ApplicationUser(1, "test", "12345");
+            userRepository.save(user);
+        }
     }
 ``` 
 ## Jwt Authentication
