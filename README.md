@@ -370,17 +370,6 @@ Before creating token you need to add one more method in your **SecurityConfig**
 ``` 
 add it in **SecurityConfig** class.
 
-It is better to send and recieve detached object, which is not connected with database(not an entity). We call them as DTO (Data Transfer Object). Lets create dto for login request.
-```java
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class AuthRequest {
-    private String username;
-    private String password;
-}
-``` 
-
 Now lets create a controller to generate token
 ```java
 @RestController
@@ -394,7 +383,7 @@ public class AccountController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest userCredentials) throws Exception {
+    public String login(@RequestBody ApplicationUser userCredentials) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userCredentials.getUsername(),userCredentials.getPassword())

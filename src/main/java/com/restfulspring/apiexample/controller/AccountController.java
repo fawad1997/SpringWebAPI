@@ -1,6 +1,6 @@
 package com.restfulspring.apiexample.controller;
 
-import com.restfulspring.apiexample.dto.AuthRequest;
+import com.restfulspring.apiexample.entity.ApplicationUser;
 import com.restfulspring.apiexample.service.JwtUtilService;
 import com.restfulspring.apiexample.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AccountController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest userCredentials) throws Exception {
+    public String login(@RequestBody ApplicationUser userCredentials) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userCredentials.getUsername(), userCredentials.getPassword())
