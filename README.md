@@ -278,11 +278,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
 ```
@@ -291,11 +291,15 @@ Now application will use our own customized security
 (Optional) Suppose we want to new user data into database when the application starts we can create new method in main class and use **@PostConstruct** annotation to bind it with application start.
 ```java
 @Autowired
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @PostConstruct
     public void seedUser() {
-        if(userRepository.findByUsername("test")==null) {
-            ApplicationUser user = new ApplicationUser(1, "test", "12345");
+        if (userRepository.findByUsername("test") == null) {
+            String encodedPassword = passwordEncoder.encode("12345");
+            ApplicationUser user = new ApplicationUser(1, "test", encodedPassword);
             userRepository.save(user);
         }
     }

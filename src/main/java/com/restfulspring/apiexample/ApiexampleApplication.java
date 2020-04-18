@@ -5,6 +5,7 @@ import com.restfulspring.apiexample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.annotation.PostConstruct;
 
@@ -13,11 +14,14 @@ public class ApiexampleApplication {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void seedUser() {
         if (userRepository.findByUsername("test") == null) {
-            ApplicationUser user = new ApplicationUser(1, "test", "12345");
+            String encodedPassword = passwordEncoder.encode("12345");
+            ApplicationUser user = new ApplicationUser(1, "test", encodedPassword);
             userRepository.save(user);
         }
     }
