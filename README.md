@@ -244,3 +244,18 @@ public interface UserRepository extends JpaRepository<ApplicationUser,Integer> {
     ApplicationUser findByUsername(String username);
 }
 ```
+#### Cerate Service that will implement UserDetailsService
+Now create a service that should implement **UserDetailsService** as follows
+```java
+@Service
+public class UserService implements UserDetailsService {
+    @Autowired
+    private UserRepository userRepository;
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        ApplicationUser user = userRepository.findByUsername(username);
+        return new User(user.getUsername(),user.getPassword(),new ArrayList<>());
+    }
+}
+```
+where **User** is from ```import org.springframework.security.core.userdetails.User;``` following import.
