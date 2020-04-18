@@ -21,6 +21,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
         - [Create Security Configuration File](#create-security-configuration-file)
 - [Jwt Authentication](#jwt-authentication)
     - [Adding Dependencies](#adding-dependencies)
+    - [Create JwtUtilService](#create-jwtutilservice)
 
 ## Creating Project
 In IntelliJ IDEA, go to spring initilizer, create new project by selecting **Spring web** in dependencies. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/ee38d2323931446cb310ba963d825503ae73a6a4)
@@ -305,3 +306,50 @@ To include Jwt in your project, you need to include the following dependencies:
 - [JAXB API](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1)
 
 you need to include [JAXB API](https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api/2.3.1) if you are using Java 9 or above.
+
+#### Create JwtUtilService
+Now create a JwtUtilService that will contains business logic needed by Jwt. Copy it as given below
+```java
+@Service
+public class JwtUtilService {
+    private final String secret = "fawad";
+
+    public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    public Date extractExpiration(String token) {
+        return extractClaim(token, Claims::getExpiration);
+    }
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    }
+
+    private Boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
+    }
+
+    public String generateToken(String username) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, username);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject) {
+
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SignatureAlgorithm.HS256, secret).compact();
+    }
+
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+}
+```
+
