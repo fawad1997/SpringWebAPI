@@ -238,7 +238,9 @@ public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true,nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
 }
 ```
@@ -457,5 +459,5 @@ and in the Security config, register filter and stateless session. Inject **JwtF
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+    } 
 ```
