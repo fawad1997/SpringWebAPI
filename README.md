@@ -242,6 +242,7 @@ public class ApplicationUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotBlank(message = "username cann't be blank")
     @Column(unique = true,nullable = false)
     private String username;
     @Column(nullable = false)
