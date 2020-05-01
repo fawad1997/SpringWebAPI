@@ -11,6 +11,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [Using MySQL database instead of H2](#using-mysql-database-instead-of-h2)
 - [One to Many Relation in Hibernate](#one-to-many-relation-in-hibernate)
   - [Creating Entities](#creating-entities)
+- [Many to Many Relation in Hibernate](#many-to-many-relation-in-hibernate)
 - [Error Handling](#error-handling)
 - [JPA Hibernate Validations](#jpa-hibernate-validations)
 - [Creating Filters](#creating-filters)
@@ -175,6 +176,44 @@ same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/com
 ##### Creating Controllers
 same as above [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/72620f3b512d3e5f8ad3a12fcb29846e949c5738)
 
+### Many to Many Relation in Hibernate
+Lets take the example of two entities **Student** and **Course**, One student can be enrolled in multiple courses, similarly, Each course contains multiple students. If you remember database normalization rules, we need to break the entity to seperate entity for Many to Many relation.
+
+One ony below table, use **@JoinTable** annotation to specify 3rd table name, column to join from current table, and column from the other table. 
+```java
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Student {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int studentId;
+    private String name;
+    private String regNo;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "student_courses",
+            joinColumns = {@JoinColumn(name = "studentId")},
+            inverseJoinColumns = {@JoinColumn(name = "courseId")})
+    private List<Course> courses;
+}
+```
+and
+```java
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int courseId;
+    private String courseTitle;
+    private String courseCode;
+    @ManyToMany
+    private List<Student> students;
+}
+```
 ### Error Handling
 Suppose users requests a resource by FindbyId, currently it returns null, instead of null, we will now handle the error and return not found error. For that create a package named **exception** and create a class to handle exception. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/71dabd4475d16720909d32e4dadf3c0224bdaaaa)
 ```java
