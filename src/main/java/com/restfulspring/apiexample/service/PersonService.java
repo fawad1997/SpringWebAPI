@@ -32,7 +32,7 @@ public class PersonService {
     }
 
     public Person updatePerson(int id,Person person){
-        person.setID(id);
+        person.setId(id);
         personRepository.save(person);
         return person;
     }

@@ -12,6 +12,7 @@ In this repository, you can learn **Spring Rest API** from beginner to advanced 
 - [One to Many Relation in Hibernate](#one-to-many-relation-in-hibernate)
   - [Creating Entities](#creating-entities)
 - [Error Handling](#error-handling)
+- [JPA Hibernate Validations](#jpa-hibernate-validations)
 - [Creating Filters](#creating-filters)
 - [Spring Security](#spring-security)
     - [Spring Basic Security](#spring-basic-security)
@@ -194,6 +195,52 @@ modify getPerson method to throw notfound error
         return person.get();
     }
 ```
+### JPA Hibernate Validations
+To customize table design, we can use different annotatons on top of each field.
+
+- **@Id** makes it Primary Key.
+- **@GeneratedValue(strategy = GenerationType.IDENTITY)** make it autoincrement by 1.
+- **@JsonProperty(value = "ID")** make sures it should be **ID** in JSON format instead of **id**
+- **@NotNull(message = "Name cann't be null")** makes the field non nullable.
+- **@Size(min = 2,max = 100, message = "Name must be minimum 2 characters and maximum 100 characters long")** validates the size of the field.
+- **@Email** is used to validate email.
+- **@Min(8)** and **@Max(110)** says that number should be between 8-110.
+- **@Pattern(regexp = "^\\(?(\\d{5})\\)?[-]?(\\d{7})[-]?(\\d{1})$",message = "CNIC sholud be in format xxxxx-xxxxxxx-x")** is used for regular expression.
+- **@Past** makes sure that date should be from past, mnot future.
+- **@JsonFormat(pattern = "yyyy-MM-dd")** make sures JSON data should be in this format.
+
+```java
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(value = "ID")
+    private int id;
+    @JsonProperty(value = "Name")
+    @NotNull(message = "Name cann't be null")
+    @Size(min = 2,max = 100, message = "Name must be minimum 2 characters and maximum 100 characters long")
+    private String name;
+    @Email
+    private String email;
+    @JsonProperty(value = "Age")
+    @Min(8)
+    @Max(110)
+    private int age;
+    @JsonProperty(value = "Height")
+    private double height;
+    @JsonProperty(value = "CNIC")
+    @Pattern(regexp = "^\\(?(\\d{5})\\)?[-]?(\\d{7})[-]?(\\d{1})$",message = "CNIC sholud be in format xxxxx-xxxxxxx-x")
+    private String cnic;
+    @Past
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate doB;
+}
+```
+After adding these annotations, our table will be created with those restrictions. But if we insert invalid data through JSON, our application will throw exception or maybe crash. We need to validate these properties in controller to avoid exceptions.
+
 ### Creating Filters
 Create a package **filters** and create filter in it.
 Make it **component** of spring framework by adding **@Component** annotation. By default, filter is called on every url pattren. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/6c14edfd6299cf040d63c8a689c3395d5415de35)
