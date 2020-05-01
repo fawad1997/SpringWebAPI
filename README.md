@@ -241,7 +241,7 @@ public class Person {
 ```
 After adding these annotations, our table will be created with those restrictions. But if we insert invalid data through JSON, our application will throw exception or maybe crash. We need to validate these properties in controller to avoid exceptions.
 #### Handling Validations in Controller
-Use **@Valid** to check for validations, and also inject BindingResult in it which will help us to catch errors, If invalid, then return errors, else, return created object.
+Use **@Valid** to check for validations, and also inject BindingResult in it which will help us to catch errors, If invalid, then return errors, else, return created object. Simplarly check for validations in PutMapping function too.
 ```java
 @PostMapping
 public ResponseEntity<?> addPerson(@Valid @RequestBody Person person, BindingResult result){
