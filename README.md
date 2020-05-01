@@ -240,7 +240,22 @@ public class Person {
 }
 ```
 After adding these annotations, our table will be created with those restrictions. But if we insert invalid data through JSON, our application will throw exception or maybe crash. We need to validate these properties in controller to avoid exceptions.
-
+#### Handling Validations in Controller
+Use **@Valid** to check for validations, and also inject BindingResult in it which will help us to catch errors, If invalid, then return errors, else, return created object.
+```java
+@PostMapping
+public ResponseEntity<?> addPerson(@Valid @RequestBody Person person, BindingResult result){
+    if(result.hasErrors()){
+        Map<String,String> errors = new HashMap<>();
+        for(FieldError error:result.getFieldErrors()){
+            errors.put(error.getField(),error.getDefaultMessage());
+        }
+        return new ResponseEntity<Map<String,String>>(errors, HttpStatus.BAD_REQUEST);
+    }
+    Person p = personService.addPerson(person);
+    return new ResponseEntity<Person>(p,HttpStatus.CREATED);
+}
+```
 ### Creating Filters
 Create a package **filters** and create filter in it.
 Make it **component** of spring framework by adding **@Component** annotation. By default, filter is called on every url pattren. [(referance commit)](https://github.com/fawad1997/SpringWebAPI/commit/6c14edfd6299cf040d63c8a689c3395d5415de35)
